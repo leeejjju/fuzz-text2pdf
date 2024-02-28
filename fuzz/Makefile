@@ -40,7 +40,7 @@ INPUT = input
 fuzz: text2pdf.out run
 	
 text2pdf.out: text2pdf.c
-	$(CC) $(CFLAG) -o $@ $^
+	$(CC) $(CFLAG) -o $@ $^ -DFUZZ
 
 run: 
 	./text2pdf.out $(INPUT)
