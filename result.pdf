@@ -1,7 +1,7 @@
 %PDF-1.1
 1 0 obj
 <<
-/CreationDate (D:20240228210431)
+/CreationDate (D:20240228225256)
 /Producer (text2pdf v1.1 (\251 Phil Smith, 1996))
 >>
 endobj
@@ -42,15 +42,13 @@ BT
 /F1 10 Tf
 1 0 0 1 50 752 Tm
 12 TL
-(once upon a time a mac was dead.)'
-(So I should initialize my mac, and my all data is blew up.)'
-(\353\255\220\354\225\274 \354\202\264\353\240\244\354\244\230\354\232\224.)'
-()'
+(once\377\377\377\377\377\377\377\377\377was dead.)'
+(So I shouldc was deaiali inizt\273e)'
 ET
 endstream
 endobj
 8 0 obj
-220
+132
 endobj
 3 0 obj
 <<
@@ -62,12 +60,12 @@ endobj
 endobj
 xref
 0 9
-0000000000 65535 f 0000000009 00000 n 0000000113 00000 n 0000000682 00000 n 0000000162 00000 n 0000000240 00000 n 0000000311 00000 n 0000000391 00000 n 0000000663 00000 n trailer
+0000000000 65535 f 0000000009 00000 n 0000000113 00000 n 0000000594 00000 n 0000000162 00000 n 0000000240 00000 n 0000000311 00000 n 0000000391 00000 n 0000000575 00000 n trailer
 <<
 /Size 9
 /Root 2 0 R
 /Info 1 0 R
 >>
 startxref
-767
+679
 %%EOF

@@ -370,10 +370,13 @@ int main(int argc, char **argv){
 
 #ifdef FUZZ
 	ifilename = (char*)malloc(sizeof(char)*256);
-    sprintf(ifilename, "/tmp/libfuzzer.%d", getpid());
+    sprintf(ifilename, "./tmp/libfuzzer.%d", getpid());
     infile = fopen(ifilename, "wb");
     if (!infile) return 0;
-    fwrite(Data, Size, 1, infile);
+    size_t total_write = 0;
+    while(total_write < Size){
+      total_write += fwrite(Data+total_write, 1, Size-total_write, infile);
+    }
     fclose(infile);
     infile = fopen(ifilename, "r");
 
@@ -472,6 +475,8 @@ int main(int argc, char **argv){
 
 #ifdef FUZZ
 	free(ifilename);
+  pageNo = 0;
+  curObj = 5;  /* object number being or last written */
 #endif
 
   return 0;
