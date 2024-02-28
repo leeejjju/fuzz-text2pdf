@@ -28,6 +28,10 @@ Version 1.1
 #include <string.h>
 #include <time.h>
 
+#ifdef FUZZ
+#include <stdint.h>
+#endif
+
 #ifndef SEEK_SET
 #define SEEK_SET 0
 #endif
@@ -351,7 +355,11 @@ void ShowHelp(){
   printf("\n%s (c) Phil Smith, 1996\n", appname);
 }
 
+#ifdef FUZZ
+extern int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size){
+#else
 int main(int argc, char **argv){
+#endif
   int i = 1;
   int tmp, landscape = 0;
   char *ifilename = NULL;
@@ -360,12 +368,22 @@ int main(int argc, char **argv){
   strcat(font, defaultFont);
   infile = stdin;  /* default */
 
+#ifdef FUZZ
+	ifilename = (char*)malloc(sizeof(char)*256);
+    sprintf(ifilename, "/tmp/libfuzzer.%d", getpid());
+    infile = fopen(ifilename, "wb");
+    if (!infile) return 0;
+    fwrite(Data, Size, 1, infile);
+    fclose(infile);
+    infile = fopen(ifilename, "r");
+
+#else
   while (i < argc) {
-    if (*argv[i] != '-') {  /* input filename */
-      ifilename = argv[i];
-      if (!(infile = fopen(ifilename, "r"))) {
-	fprintf(stderr, "%s: couldn't open input file `%s'\n", progname, ifilename);
-	exit(0);
+    if (*argv[i] != '-') { 
+	ifilename = argv[i];
+    if (!(infile = fopen(ifilename, "r"))) {
+		fprintf(stderr, "%s: couldn't open input file `%s'\n", progname, ifilename);
+		exit(0);
       }
     } else {
       switch (*++argv[i]) {
@@ -436,6 +454,7 @@ int main(int argc, char **argv){
     }
     i++;
   }
+#endif
 
   if (landscape) {
     tmp = pageHeight;
@@ -450,6 +469,10 @@ int main(int argc, char **argv){
   WriteHeader(ifilename);
   WritePages();
   WriteRest();
+
+#ifdef FUZZ
+	free(ifilename);
+#endif
 
   return 0;
 }

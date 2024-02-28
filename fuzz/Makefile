@@ -31,6 +31,22 @@ SHELL		= /bin/sh
 
 all:	$(PROGRAM)
 
+
+#========================for fuzzing==========================
+CC = clang
+CFLAG = -fsanitize=fuzzer,address,undefined -g
+INPUT = input
+
+fuzz: text2pdf.out run
+	
+text2pdf.out: text2pdf.c
+	$(CC) $(CFLAG) -o $@ $^
+
+run: 
+	./text2pdf.out $(INPUT)
+
+#==============================================================
+
 check:	$(PROGRAM) $(PROGRAM).pdf
 	@echo "The only differences should be in the /CreationDate lines"
 	-$(DIFF) $(PROGRAM).pdf $(PROGRAM).pok
